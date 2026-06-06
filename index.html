@@ -3,435 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Portfolio - Phạm Anh Tùng</title>
+    <title>NST.PORTFOLIO - Nguyễn Sỹ Thành</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS Variables - Hệ màu Modern Dark Theme */
+        /* === BIẾN MÀU SẮC CHỦ ĐẠO === */
         :root {
-            --bg-body: #0f172a; /* Xanh đen sâu */
-            --bg-surface: rgba(30, 41, 59, 0.7); /* Kính mờ */
-            --primary: #3b82f6;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --text-main: #f8fafc;
+            --bg-color: #050814;
+            --glass-bg: rgba(17, 25, 40, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.125);
+            --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #8a2be2;
+            --success: #10b981;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg-body);
+            background-color: var(--bg-color);
             color: var(--text-main);
-            min-height: 100vh;
-            padding: 40px 20px;
-            /* Nền có họa tiết mờ ảo */
-            background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 40%),
-                              radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
-            background-attachment: fixed;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* --- HIỆU ỨNG XUẤT HIỆN MƯỢT MÀ (STAGGERED ANIMATION) --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-item {
-            opacity: 0;
-            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-        .delay-5 { animation-delay: 0.5s; }
-        .delay-6 { animation-delay: 0.6s; }
-
-        /* --- HEADER --- */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            /* Chữ gradient tĩnh */
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* --- INFO GRID --- */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 50px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-item span {
-            display: block;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .info-item strong {
-            font-size: 1.15rem;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* --- PROJECT CARDS --- */
-        .project-card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 25px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Hiệu ứng viền chạy khi Hover */
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            border-color: rgba(139, 92, 246, 0.3);
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        /* Trạng thái đã hoàn thành (Card màu xanh) */
-        .project-card.completed {
-            border-color: rgba(16, 185, 129, 0.3);
-            background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(16, 185, 129, 0.05));
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .project-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-main);
-            max-width: 75%;
-            line-height: 1.4;
-        }
-
-        .status-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .status-badge.waiting {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .status-badge.done {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .project-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 25px;
+            overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* --- INPUT & BUTTON CONTROLS --- */
-        .input-group {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+        /* === HIỆU ỨNG BACKGROUND CHUYỂN ĐỘNG LIÊN TỤC === */
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.15), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.15), transparent 25%);
+            animation: bg-shift 15s infinite alternate ease-in-out;
+        }
+        .animated-bg::before, .animated-bg::after {
+            content: ''; position: absolute; width: 40vw; height: 40vw;
+            border-radius: 50%; filter: blur(80px); opacity: 0.5;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .animated-bg::before {
+            background: var(--neon-cyan); top: -10%; left: -10%;
+        }
+        .animated-bg::after {
+            background: var(--neon-purple); bottom: -10%; right: -10%;
+            animation-delay: -5s;
         }
 
-        .input-wrapper {
-            flex: 1;
-            position: relative;
+        @keyframes bg-shift { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(100px, 50px); } }
+
+        /* === THANH ĐIỀU HƯỚNG (NAVBAR) === */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(5, 8, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--neon-cyan); letter-spacing: 2px; }
+        .logo span { color: var(--text-main); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-weight: 600;
+            transition: 0.3s; position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--neon-cyan); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--neon-cyan); transition: 0.3s;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        /* === BỐ CỤC CHUNG === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 100px 20px 50px; }
+        section { margin-bottom: 80px; scroll-margin-top: 100px; }
+        .section-title {
+            font-size: 2.2rem; margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--text-main), var(--neon-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .input-wrapper i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            transition: color 0.3s;
+        /* === THẺ KÍNH MỜ (GLASSMORPHISM) === */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
+            border-color: rgba(0, 240, 255, 0.3);
         }
 
-        .url-input {
-            width: 100%;
-            padding: 14px 15px 14px 45px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: white;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
+        /* HIỆU ỨNG CUỘN TRANG (SCROLL REVEAL) */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .url-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        /* === PHẦN GIỚI THIỆU === */
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .hero-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .hero-subtitle { color: var(--neon-cyan); font-size: 1.2rem; margin-bottom: 20px; }
+        .tag-box {
+            display: inline-block; background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan); padding: 5px 15px; border-radius: 20px;
+            font-size: 0.9rem; margin-bottom: 20px; border: 1px solid rgba(0, 240, 255, 0.2);
         }
+        .text-block h3 { color: var(--neon-purple); margin-bottom: 10px; font-size: 1.3rem; }
+        .text-block p { color: var(--text-muted); margin-bottom: 20px; text-align: justify; }
 
-        .url-input:focus + i {
-            color: var(--primary);
+        /* === PHẦN DỰ ÁN & NỘP BÀI === */
+        .project-header { border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 20px; }
+        .project-header h3 { font-size: 1.4rem; color: var(--text-main); }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .submission-zone {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px; padding: 20px; margin-top: 15px;
+            border: 1px dashed rgba(255,255,255,0.2);
         }
+        .sub-title { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem; font-weight: 600;}
+        
+        /* Trạng thái */
+        .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; }
+        .status-badge.wait { background: rgba(255,255,255,0.1); color: var(--text-muted); }
+        .status-badge.done { background: rgba(16, 185, 129, 0.15); color: var(--success); box-shadow: 0 0 10px rgba(16,185,129,0.3); }
 
-        .url-input.filled {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.05);
+        .input-group { display: flex; gap: 15px; }
+        .cyber-input {
+            flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            color: white; padding: 12px 15px; border-radius: 8px; transition: 0.3s;
         }
+        .cyber-input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+        .cyber-input.filled { border-color: var(--success); color: var(--success); }
 
         .btn-view {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            padding: 14px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.05); color: var(--text-muted);
+            padding: 12px 20px; border-radius: 8px; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; pointer-events: none;
+            border: 1px solid var(--glass-border); transition: 0.3s;
         }
-
-        /* Hiệu ứng Nút sáng lên khi có link */
         .btn-view.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            pointer-events: auto;
-            border: none;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(45deg, var(--neon-cyan), #0077ff);
+            color: white; border: none; pointer-events: auto;
+            box-shadow: 0 0 15px rgba(0,240,255,0.4);
         }
+        .btn-view.active:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,240,255,0.6); }
 
-        .btn-view.active:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        /* === FOOTER === */
+        footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--glass-border); }
     </style>
 </head>
 <body>
 
+<div class="animated-bg"></div>
+
+<nav>
+    <div class="logo">NST.<span>PORTFOLIO</span></div>
+    <div class="nav-links">
+        <a href="#intro" class="active">Giới thiệu</a>
+        <a href="#projects">Dự án thành phần</a>
+        <a href="#conclusion">Tổng kết</a>
+    </div>
+</nav>
+
 <div class="container">
-    <header class="animate-item">
-        <h1>DIGITAL PORTFOLIO</h1>
-        <p>Học phần: Nhập môn Công nghệ số & Ứng dụng AI</p>
-    </header>
-
-    <div class="info-grid animate-item delay-1">
-        <div class="info-item"><span>Sinh viên</span><strong>Phạm Anh Tùng</strong></div>
-        <div class="info-item"><span>Mã sinh viên</span><strong>25021465</strong></div>
-        <div class="info-item"><span>Trường</span><strong>Đại học Công nghệ (VNU-UET)</strong></div>
-        <div class="info-item"><span>Ngành học</span><strong>Công nghệ kĩ thuật cơ điện tử</strong></div>
-    </div>
-
-    <h2 class="section-title animate-item delay-1"><i class="fa-solid fa-layer-group"></i> Danh sách báo cáo & Minh chứng</h2>
-
-    <div class="project-card animate-item delay-2" id="card-b1">
-        <div class="project-header">
-            <div class="project-title">Bài 1: Báo cáo cam kết liêm chính học thuật & Sơ đồ Infographic</div>
-            <span class="status-badge waiting" id="badge-b1"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: .docx hoặc .pdf. Nội dung chứa toàn văn văn bản cam kết liêm chính học thuật kèm theo sơ đồ tư duy tóm tắt quy trình thiết kế.</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b1" placeholder="Dán link sản phẩm Google Drive..." value="" oninput="checkLink('b1')">
+    <section id="intro" class="reveal">
+        <div class="glass-card">
+            <div class="hero-grid">
+                <div>
+                    <h1 class="hero-title">Xin chào, tôi là<br><span style="color: var(--neon-cyan);">Nguyễn Sỹ Thành</span></h1>
+                    <div class="hero-subtitle">Sinh viên Công nghệ kĩ thuật Cơ Điện Tử - VNU-UET</div>
+                    <div class="tag-box"><i class="fa-solid fa-id-card"></i> 25021471</div>
+                </div>
+                <div>
+                    <div class="text-block">
+                        <h3><i class="fa-solid fa-rocket"></i> Định hướng học tập & Phát triển</h3>
+                        <p>Là một sinh viên ngành Công nghệ kĩ thuật Cơ Điện Tử, mục tiêu lớn nhất của tôi là nắm vững sự giao thoa giữa cơ khí chuẩn xác, hệ thống điện từ thông minh và lập trình điều khiển. Tôi định hướng tích hợp sâu rộng Trí tuệ nhân tạo (AI) vào việc giải quyết các bài toán tự động hóa cơ điện tử thực tiễn, rèn luyện tư duy hệ thống và làm chủ các công cụ chuyển đổi số hiện đại.</p>
+                    </div>
+                    <div class="text-block">
+                        <h3><i class="fa-solid fa-bullseye"></i> Mục tiêu lập Portfolio</h3>
+                        <p>Hồ sơ năng lực số này được xây dựng với mục tiêu số hóa và hệ thống hóa toàn bộ minh chứng thực hành xuyên suốt học phần. Qua đó, khẳng định năng lực ứng dụng công nghệ số, kỹ năng công tác từ xa, năng lực khai thác mô hình ngôn ngữ lớn (LLM) một cách có cấu trúc, đồng thời cam kết tuyệt đối với đạo đức học thuật và tư duy liêm chính.</p>
+                    </div>
+                </div>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem sản phẩm</a>
         </div>
-    </div>
+    </section>
 
-    <div class="project-card animate-item delay-3" id="card-b2">
-        <div class="project-header">
-            <div class="project-title">Bài 2: Ảnh chụp cấu trúc cây thư mục File Explorer</div>
-            <span class="status-badge waiting" id="badge-b2"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: .png hoặc .jpg. Ảnh chụp minh chứng việc tổ chức, sắp xếp các thư mục bài tập lớn một cách khoa học trên hệ điều hành máy tính.</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b2" placeholder="Dán link ảnh minh chứng..." value="" oninput="checkLink('b2')">
+    <section id="projects">
+        <h2 class="section-title reveal"><i class="fa-solid fa-folder-tree"></i> Hệ thống Dự án & Bài tập</h2>
+
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>1. Thao tác cơ bản với tệp tin và thư mục</h3>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b2"><i class="fa-solid fa-image"></i> Xem hình ảnh</a>
-        </div>
-    </div>
-
-    <div class="project-card animate-item delay-4" id="card-b3">
-        <div class="project-header">
-            <div class="project-title">Bài 3: Báo cáo tiểu luận nghiên cứu về Công nghệ Số</div>
-            <span class="status-badge waiting" id="badge-b3"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: .docx hoặc .pdf. Bài nghiên cứu sâu về một trong các xu hướng công nghệ đột phá hiện nay ứng dụng trong ngành Cơ điện tử.</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b3" placeholder="Dán link sản phẩm Google Drive..." value="" oninput="checkLink('b3')">
+            <p class="project-desc">Mục tiêu: Xây dựng tư duy tổ chức dữ liệu số khoa học trên hệ điều hành, tối ưu hóa tốc độ tìm kiếm và làm quen với quy trình vòng đời của tập tin. Thực hiện tạo lập các file văn bản, áp dụng các thao tác nâng cao như di chuyển, đổi tên, xóa tạm thời và khôi phục dữ liệu.</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>1.1 Báo cáo thực hành Bài tập 1 (.pdf)</span>
+                    <span class="status-badge wait" id="badge-p1-1"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p1-1" placeholder="Dán link sản phẩm (Google Drive, OneDrive...)" value="" oninput="checkLink('p1-1')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p1-1"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b3"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem sản phẩm</a>
-        </div>
-    </div>
 
-    <div class="project-card animate-item delay-5" id="card-b4">
-        <div class="project-header">
-            <div class="project-title">Bài 4: Video thuyết trình dự án hoặc Slide báo cáo</div>
-            <span class="status-badge waiting" id="badge-b4"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: Link video (YouTube/Drive) hoặc file Powerpoint. Thuyết minh chi tiết giải pháp công nghệ và tính khả thi của mô hình đề xuất.</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b4" placeholder="Dán link bài thuyết trình..." value="" oninput="checkLink('b4')">
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>1.2 Ảnh chụp cấu trúc cây thư mục File Explorer (.png / .jpg)</span>
+                    <span class="status-badge wait" id="badge-p1-2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p1-2" placeholder="Dán link ảnh online (Google Drive, Imgur...)" value="" oninput="checkLink('p1-2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p1-2"><i class="fa-solid fa-image"></i> Xem ảnh</a>
+                </div>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b4"><i class="fa-solid fa-play"></i> Xem nội dung</a>
         </div>
-    </div>
 
-    <div class="project-card animate-item delay-6" id="card-b5">
-        <div class="project-header">
-            <div class="project-title">Bài 5: Bản vẽ thiết kế kĩ thuật hoặc Sơ đồ hệ thống</div>
-            <span class="status-badge waiting" id="badge-b5"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: Bản vẽ CAD, sơ đồ khối mạch điện tử hoặc cấu trúc thuật toán điều khiển ứng dụng trí tuệ nhân tạo (AI).</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b5" placeholder="Dán link tài liệu kỹ thuật..." value="" oninput="checkLink('b5')">
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>2. Tìm kiếm và đánh giá thông tin học thuật</h3>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b5"><i class="fa-solid fa-gears"></i> Xem sơ đồ</a>
-        </div>
-    </div>
-
-    <div class="project-card animate-item delay-6" id="card-b6">
-        <div class="project-header">
-            <div class="project-title">Bài 6: Báo cáo tổng kết học phần & Đánh giá năng lực</div>
-            <span class="status-badge waiting" id="badge-b6"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
-        </div>
-        <p class="project-desc">Định dạng yêu cầu: .pdf. Bài tự đánh giá sự tiến bộ của bản thân sau khóa học, định hướng ứng dụng AI vào chuyên ngành Cơ điện tử.</p>
-        <div class="input-group">
-            <div class="input-wrapper">
-                <i class="fa-solid fa-link"></i>
-                <input type="text" class="url-input" id="input-b6" placeholder="Dán link báo cáo tổng kết..." value="" oninput="checkLink('b6')">
+            <p class="project-desc">Mục tiêu: Nâng cao năng lực nghiên cứu, thu thập và thẩm định hệ thống tài liệu học thuật liên quan đến chủ đề cấp bách: "Ứng dụng Trí tuệ nhân tạo (AI) trong Giáo dục Đại học". Khai thác các cú pháp tìm kiếm toán tử nâng cao (AND, OR, *, filetype).</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>Báo cáo thẩm định tài liệu toàn văn (.docx/.pdf)</span>
+                    <span class="status-badge wait" id="badge-p2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p2" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p2"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
             </div>
-            <a href="#" target="_blank" class="btn-view" id="btn-b6"><i class="fa-solid fa-file-invoice"></i> Xem báo cáo</a>
         </div>
-    </div>
 
-    <footer class="animate-item delay-6">
-        <p>© 2026 Phạm Anh Tùng - Bản quyền sản phẩm học tập thuộc Đại học Công nghệ (VNU-UET).</p>
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>3. Nghiên cứu & Thử nghiệm kỹ thuật Prompt Engineering</h3>
+            </div>
+            <p class="project-desc">Mục tiêu: Thực nghiệm 3 tác vụ học tập qua Cấu trúc CLEAR. Làm chủ kỹ nghệ viết câu lệnh chỉ thị, được triển khai song song qua 3 cấp độ (Cơ bản, Cải tiến, Nâng cao).</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>Báo cáo nghiên cứu Prompt kỹ thuật chuyên sâu (.docx/.pdf)</span>
+                    <span class="status-badge wait" id="badge-p3"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p3" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p3')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p3"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>4. Hợp tác trực tuyến trong môi trường số</h3>
+            </div>
+            <p class="project-desc">Mục tiêu: Xây dựng hệ sinh thái làm việc và vận hành nhóm trực tuyến chuẩn hóa chuyên nghiệp. Sử dụng Trello quản lý dự án Kanban, Google Docs đồng soạn thảo tài liệu, Google Drive lưu trữ và Discord duy trì kênh truyền thông tức thời.</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>Báo cáo đóng góp cá nhân và đường link Board nhóm (.docx /.pdf)</span>
+                    <span class="status-badge wait" id="badge-p4"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p4" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p4')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p4"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>5. Sử dụng AI tạo sinh trong sáng tạo nội dung số</h3>
+            </div>
+            <p class="project-desc">Mục tiêu: Phối hợp đa nền tảng trí tuệ nhân tạo tạo sinh nhằm tối ưu hóa chuỗi quy trình thiết kế nội dung. Triển khai dự án xây dựng bài thuyết trình chuyên sâu 15 slide với chủ đề chuyên ngành.</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>5.1 Báo cáo quy trình phối hợp ứng dụng hệ sinh thái AI (.docx/.pdf)</span>
+                    <span class="status-badge wait" id="badge-p5-1"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p5-1" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p5-1')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p5-1"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
+            </div>
+
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>5.2 Slide bản thuyết trình hoàn chỉnh (.pptx/.pdf)</span>
+                    <span class="status-badge wait" id="badge-p5-2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p5-2" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p5-2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p5-2"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card reveal">
+            <div class="project-header">
+                <h3>6. Sử dụng AI có trách nhiệm & Đạo đức học thuật</h3>
+            </div>
+            <p class="project-desc">Mục tiêu: Xác định ranh giới đạo đức học thuật minh bạch giữa việc mượn lực AI hỗ trợ nghiên cứu chân chính và hành vi lạm dụng gian lận. Thiết lập hệ thống 7 nguyên tắc vàng cá nhân: Minh bạch | Tự chủ | Kiểm chứng | Bảo mật | Trách nhiệm | Không lạm dụng | Học hỏi liên tục.</p>
+            
+            <div class="submission-zone">
+                <div class="sub-title">
+                    <span>Báo cáo cam kết liêm chính học thuật & Sơ đồ thiết kế Infographic (.docx/.pdf)</span>
+                    <span class="status-badge wait" id="badge-p6"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="cyber-input" id="input-p6" placeholder="Dán link sản phẩm..." value="" oninput="checkLink('p6')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p6"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conclusion" class="reveal">
+        <h2 class="section-title"><i class="fa-solid fa-flag-checkered"></i> Hành trình Nhìn lại & Đúc kết</h2>
+        <div class="glass-card">
+            <div class="hero-grid">
+                <div class="text-block">
+                    <h3>Trải nghiệm & Cảm nhận cá nhân</h3>
+                    <p>Hành trình hoàn thành 6 bài tập lớn không đơn thuần là việc học cách sử dụng các phần mềm máy tính, mà đó là quá trình chuyển đổi căn bản trong tư duy số. Từ một người tiếp cận công nghệ mang tính thụ động, tôi đã rèn luyện được năng lực chủ động điều phối, kết hợp liên hoàn các giải pháp trí tuệ nhân tạo để phục vụ tối ưu cho học tập chuyên ngành Cơ điện tử.</p>
+                </div>
+                <div class="text-block">
+                    <h3>Triết lý cốt lõi: AI là Trợ lý, Bạn là Bản chính</h3>
+                    <p>Bài học đắt giá nhất tôi đúc kết được là hiểu rõ vị thế của bản thân trước làn sóng AI. Các mô hình AI tạo sinh rất mạnh trong việc tối ưu hóa thời gian xây dựng bộ khung nháp ban đầu hoặc khơi nguồn cảm hứng ý tưởng độc đáo. Tuy nhiên, năng lực tư duy phản biện, sự kiểm chứng chéo nghiêm túc và những trải nghiệm sâu sắc mang đậm dấu ấn cá nhân mới là giá trị cốt lõi bền vững.</p>
+                </div>
+                <div class="text-block">
+                    <h3>Kỹ năng cốt lõi đạt được</h3>
+                    <ul style="color: var(--text-muted); margin-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                        <li><strong>Kỹ nghệ Prompt Engineering chuẩn C.L.E.A.R:</strong> Biết cách kiểm soát đầu ra của LLM chuẩn xác.</li>
+                        <li><strong>Thẩm định & Sàng lọc:</strong> Kỹ năng phân tích, phân loại nguồn tài liệu tin cậy.</li>
+                        <li><strong>Quản lý dự án số từ xa:</strong> Làm chủ hệ sinh thái công cụ số (Trello Kanban, Async-communication).</li>
+                    </ul>
+                </div>
+                <div class="text-block">
+                    <h3>Vượt qua thử thách</h3>
+                    <p>Thách thức lớn nhất là xử lý các giới hạn cố hữu của AI (tính ảo giác hallucination) và duy trì tính nhất quán khi làm việc nhóm online. Việc áp dụng tư duy "Zero-Trust" (không tin tưởng tuyệt đối) với mọi kết quả do AI tạo ra đã giúp tôi khắc phục triệt để vấn đề này.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Hệ thống Digital Portfolio - Phiên bản 2.0 | Cập nhật lúc 10:48 AM - 06/06/2026</p>
     </footer>
 </div>
 
 <script>
-    // Hàm kiểm tra và kích hoạt hiệu ứng khi có link
+    // 1. Script kiểm tra link và bật hiệu ứng nộp bài
+    const inputsToTrack = ['p1-1', 'p1-2', 'p2', 'p3', 'p4', 'p5-1', 'p5-2', 'p6'];
+
     function checkLink(id) {
         const input = document.getElementById('input-' + id);
         const badge = document.getElementById('badge-' + id);
         const btn = document.getElementById('btn-' + id);
-        const card = document.getElementById('card-' + id);
         
-        if (input.value.trim().length > 10) { // Nếu có dán link
+        if (input.value.trim().length > 10) { 
             badge.className = "status-badge done";
-            badge.innerHTML = '<i class="fa-solid fa-check"></i> Đã nộp bài';
+            badge.innerHTML = '<i class="fa-solid fa-check"></i> Đã nộp bằng link';
             input.classList.add('filled');
             btn.href = input.value;
             btn.classList.add('active');
-            card.classList.add('completed');
-        } else { // Nếu ô trống
-            badge.className = "status-badge waiting";
-            badge.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu';
+        } else {
+            badge.className = "status-badge wait";
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm';
             input.classList.remove('filled');
             btn.href = "#";
             btn.classList.remove('active');
-            card.classList.remove('completed');
         }
     }
 
-    // Tự động quét các ô input ngay khi vừa tải trang xong
+    // Tự động kiểm tra lúc tải trang (nếu bạn gắn value cứng)
     window.addEventListener('DOMContentLoaded', () => {
-        for(let i=1; i<=6; i++) { 
-            checkLink('b' + i); 
-        }
+        inputsToTrack.forEach(id => checkLink(id));
+    });
+
+    // 2. Script hiệu ứng cuộn trang (Scroll Reveal)
+    const revealElements = document.querySelectorAll('.reveal');
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => scrollObserver.observe(el));
+
+    // 3. Script Active Navbar khi cuộn
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= sectionTop - 150) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").includes(current)) {
+                link.classList.add("active");
+            }
+        });
     });
 </script>
 </body>
