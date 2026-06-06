@@ -3,423 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mechatronics Digital Portfolio - Phạm Anh Tùng</title>
+    <title>Digital Portfolio - Phạm Anh Tùng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Hệ màu Cyberpunk Tech cao cấp */
+        /* CSS Variables - Hệ màu Modern Dark Theme */
         :root {
-            --matrix-bg: #030712;
-            --cyber-panel: rgba(17, 24, 39, 0.7);
-            --neon-blue: #06b6d4;
-            --neon-green: #10b981;
-            --neon-red: #ef4444;
-            --text-bright: #f3f4f6;
-            --text-dim: #9ca3af;
+            --bg-body: #0f172a; /* Xanh đen sâu */
+            --bg-surface: rgba(30, 41, 59, 0.7); /* Kính mờ */
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         body {
-            background-color: var(--matrix-bg);
-            color: var(--text-bright);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 50px 20px;
-            overflow-x: hidden;
-            position: relative;
+            padding: 40px 20px;
+            /* Nền có họa tiết mờ ảo */
+            background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
+            background-attachment: fixed;
         }
 
-        /* Hiệu ứng mạng lưới công nghệ chìm phía sau nền */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
-        }
-
-        .dashboard {
-            max-width: 950px;
+        .container {
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* Khung tiêu đề hiệu ứng quét Radar */
-        .cyber-header {
-            position: relative;
-            background: var(--cyber-panel);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            backdrop-filter: blur(12px);
-            padding: 30px;
-            border-radius: 12px;
+        /* --- HIỆU ỨNG XUẤT HIỆN MƯỢT MÀ (STAGGERED ANIMATION) --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-item {
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+
+        /* --- HEADER --- */
+        header {
             text-align: center;
-            margin-bottom: 30px;
-            overflow: hidden;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .cyber-header::after {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent);
-            transform: skewX(-25deg);
-            animation: radar-sweep 6s infinite linear;
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            /* Chữ gradient tĩnh */
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
-        .cyber-header h1 {
-            font-size: 2.2rem;
-            letter-spacing: 4px;
-            color: #ffffff;
-            text-shadow: 0 0 15px var(--neon-blue);
-            margin-bottom: 8px;
-            text-transform: uppercase;
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
-        /* Grid thông tin cá nhân dạng thông số kĩ thuật (Telemetry) */
-        .telemetry-grid {
+        /* --- INFO GRID --- */
+        .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .telemetry-box {
-            background: var(--cyber-panel);
-            border: 1px solid rgba(156, 163, 175, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            border-radius: 6px;
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .telemetry-box:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .telemetry-box label {
+        .info-item span {
             display: block;
-            font-size: 11px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
             text-transform: uppercase;
-            color: var(--neon-blue);
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
 
-        .telemetry-box value {
-            font-size: 15px;
-            font-weight: bold;
-            display: block;
-        }
-
-        /* Danh sách Module bài tập */
-        .module-card {
-            background: var(--cyber-panel);
-            border: 1px solid rgba(156, 163, 175, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 25px;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Hiệu ứng Hover phát sáng đổi màu theo trạng thái */
-        .module-card:hover {
-            transform: scale(1.01) translateX(5px);
-            border-color: rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
-        }
-
-        /* Khi bài đã có link - Kích hoạt mạch điện xanh lá cây */
-        .module-card.activated-node {
-            border-color: rgba(16, 185, 129, 0.4);
-            background: linear-gradient(135deg, var(--cyber-panel), rgba(16, 185, 129, 0.03));
-            animation: pulse-border 2.5s infinite alternate;
-        }
-
-        .module-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .module-title {
-            font-size: 1.2rem;
+        .info-item strong {
+            font-size: 1.15rem;
+            color: var(--text-main);
             font-weight: 600;
-            color: #ffffff;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* Nút trạng thái nhấp nháy đèn LED */
-        .led-status {
-            font-size: 12px;
+        /* --- PROJECT CARDS --- */
+        .project-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng viền chạy khi Hover */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Trạng thái đã hoàn thành (Card màu xanh) */
+        .project-card.completed {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(16, 185, 129, 0.05));
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+            max-width: 75%;
+            line-height: 1.4;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.waiting {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .status-badge.done {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* --- INPUT & BUTTON CONTROLS --- */
+        .input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .url-input:focus + i {
+            color: var(--primary);
+        }
+
+        .url-input.filled {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .btn-view {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            padding: 14px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--neon-red);
-            padding: 4px 12px;
-            border-radius: 4px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .led-status::before {
-            content: "";
-            width: 8px; height: 8px;
-            background-color: var(--neon-red);
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px var(--neon-red);
-        }
-
-        /* Đèn LED chuyển xanh khi xong bài */
-        .module-card.activated-node .led-status {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--neon-green);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        .module-card.activated-node .led-status::before {
-            background-color: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
-            animation: led-blink 1.5s infinite;
-        }
-
-        .module-text {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        /* Khung điều khiển tích hợp link */
-        .control-bay {
-            display: flex;
-            gap: 12px;
-        }
-
-        .cyber-input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(156, 163, 175, 0.3);
-            padding: 12px 15px;
-            color: #ffffff;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .cyber-input:focus {
-            outline: none;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
-        }
-
-        .cyber-input.has-data {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
-
-        /* Nút hành động phản quang */
-        .cyber-btn {
-            background: rgba(156, 163, 175, 0.1);
-            color: var(--text-dim);
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 14px;
-            border: 1px solid rgba(156, 163, 175, 0.2);
+            font-weight: 500;
             pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
 
-        .cyber-btn.ready {
-            background: linear-gradient(135deg, #0891b2, #0284c7);
+        /* Hiệu ứng Nút sáng lên khi có link */
+        .btn-view.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            border-color: var(--neon-blue);
             pointer-events: auto;
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
 
-        .cyber-btn.ready:hover {
+        .btn-view.active:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--neon-blue);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
         }
 
-        /* Các hiệu ứng Animation chuyển động kĩ thuật */
-        @keyframes radar-sweep {
-            0% { left: -100%; }
-            50%, 100% { left: 150%; }
-        }
-
-        @keyframes led-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.05); }
-            100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
-        }
-
-        .footer {
+        footer {
             text-align: center;
             margin-top: 60px;
-            color: rgba(156, 163, 175, 0.4);
-            font-size: 12px;
-            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
-    <div class="cyber-header">
-        <h1>Digital Portfolio System</h1>
-        <p style="color: var(--neon-blue); font-size: 14px; letter-spacing: 2px;">MODULE VÀNG - ĐỒ ÁN HỌC PHẦN</p>
+<div class="container">
+    <header class="animate-item">
+        <h1>DIGITAL PORTFOLIO</h1>
+        <p>Học phần: Nhập môn Công nghệ số & Ứng dụng AI</p>
+    </header>
+
+    <div class="info-grid animate-item delay-1">
+        <div class="info-item"><span>Sinh viên</span><strong>Phạm Anh Tùng</strong></div>
+        <div class="info-item"><span>Mã sinh viên</span><strong>25021465</strong></div>
+        <div class="info-item"><span>Trường</span><strong>Đại học Công nghệ (VNU-UET)</strong></div>
+        <div class="info-item"><span>Ngành học</span><strong>Công nghệ kĩ thuật cơ điện tử</strong></div>
     </div>
 
-    <!-- Hệ thống dữ liệu đầu ra của Sinh viên -->
-    <div class="telemetry-grid">
-        <div class="telemetry-box"><label>STUDENT NAME</label><value>Phạm Anh Tùng</value></div>
-        <div class="telemetry-box"><label>SERIAL NUMBER</label><value>25021465</value></div>
-        <div class="telemetry-box"><label>INSTITUTION</label><value>VNU - UET</value></div>
-        <div class="telemetry-box"><label>DEPARTMENT</label><value>Cơ điện tử (Mechatronics)</value></div>
-    </div>
+    <h2 class="section-title animate-item delay-1"><i class="fa-solid fa-layer-group"></i> Danh sách báo cáo & Minh chứng</h2>
 
-    <!-- Module 01 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">⚙️ Module 01: Liêm chính học thuật & Sơ đồ Tư duy</div>
-            <div class="led-status">Hệ thống đợi link</div>
+    <div class="project-card animate-item delay-2" id="card-b1">
+        <div class="project-header">
+            <div class="project-title">Bài 1: Báo cáo cam kết liêm chính học thuật & Sơ đồ Infographic</div>
+            <span class="status-badge waiting" id="badge-b1"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
         </div>
-        <div class="module-text">Tệp lưu trữ thông tin cam kết liêm chính học thuật kết hợp sơ đồ tư duy minh họa luồng xử lý và phát triển thiết bị truyền thông thông minh.</div>
-        <div class="control-bay">
-            <!-- TÙNG CHỈ CẦN DÁN LINK DRIVE VÀO THUỘC TÍNH value="" Ở ĐÂY LÀ WEB TỰ ĐỔI MÀU -->
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
-        </div>
-    </div>
-
-    <!-- Module 02 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">📂 Module 02: Cấu trúc thư mục hệ thống máy tính</div>
-            <div class="led-status">Hệ thống đợi link</div>
-        </div>
-        <div class="module-text">Sơ đồ cây dữ liệu minh chứng cho hoạt động quản lý, lưu trữ, phân loại dữ liệu bài tập lớn một cách logic trên máy tính cá nhân.</div>
-        <div class="control-bay">
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
+        <p class="project-desc">Định dạng yêu cầu: .docx hoặc .pdf. Nội dung chứa toàn văn văn bản cam kết liêm chính học thuật kèm theo sơ đồ tư duy tóm tắt quy trình thiết kế.</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b1" placeholder="Dán link sản phẩm Google Drive..." value="" oninput="checkLink('b1')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem sản phẩm</a>
         </div>
     </div>
 
-    <!-- Module 03 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">📝 Module 03: Tiểu luận nghiên cứu Công nghệ số</div>
-            <div class="led-status">Hệ thống đợi link</div>
+    <div class="project-card animate-item delay-3" id="card-b2">
+        <div class="project-header">
+            <div class="project-title">Bài 2: Ảnh chụp cấu trúc cây thư mục File Explorer</div>
+            <span class="status-badge waiting" id="badge-b2"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
         </div>
-        <div class="module-text">Báo cáo nghiên cứu chuyên sâu về mô hình tích hợp trí tuệ nhân tạo (AI) kết hợp các cảm biến thông minh vào dây chuyền Cơ điện tử tự động.</div>
-        <div class="control-bay">
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
-        </div>
-    </div>
-
-    <!-- Module 04 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">🎬 Module 04: Video thuyết trình giải pháp hệ thống</div>
-            <div class="led-status">Hệ thống đợi link</div>
-        </div>
-        <div class="module-text">Dữ liệu đa phương tiện ghi lại quá trình báo cáo, chứng minh tính thực tiễn và giải trình thuật toán thiết kế của sản phẩm Cơ điện tử.</div>
-        <div class="control-bay">
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
+        <p class="project-desc">Định dạng yêu cầu: .png hoặc .jpg. Ảnh chụp minh chứng việc tổ chức, sắp xếp các thư mục bài tập lớn một cách khoa học trên hệ điều hành máy tính.</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b2" placeholder="Dán link ảnh minh chứng..." value="" oninput="checkLink('b2')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b2"><i class="fa-solid fa-image"></i> Xem hình ảnh</a>
         </div>
     </div>
 
-    <!-- Module 05 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">📐 Module 05: Bản vẽ kĩ thuật & Sơ đồ giải thuật điều khiển</div>
-            <div class="led-status">Hệ thống đợi link</div>
+    <div class="project-card animate-item delay-4" id="card-b3">
+        <div class="project-header">
+            <div class="project-title">Bài 3: Báo cáo tiểu luận nghiên cứu về Công nghệ Số</div>
+            <span class="status-badge waiting" id="badge-b3"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
         </div>
-        <div class="module-text">Hồ sơ thiết kế chi tiết bao gồm bản vẽ CAD, sơ đồ khối mạch điện hoặc lưu đồ thuật toán logic xử lý thông tin đầu vào/đầu ra của robot.</div>
-        <div class="control-bay">
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
-        </div>
-    </div>
-
-    <!-- Module 06 -->
-    <div class="module-card">
-        <div class="module-top">
-            <div class="module-title">📊 Module 06: Tổng kết học phần & Đánh giá năng lực số</div>
-            <div class="led-status">Hệ thống đợi link</div>
-        </div>
-        <div class="module-text">Báo cáo tổng kết chặng đường nghiên cứu học phần, đo lường sự phát triển tư duy công nghệ và lộ trình ứng dụng AI vào ngành học.</div>
-        <div class="control-bay">
-            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
-            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
+        <p class="project-desc">Định dạng yêu cầu: .docx hoặc .pdf. Bài nghiên cứu sâu về một trong các xu hướng công nghệ đột phá hiện nay ứng dụng trong ngành Cơ điện tử.</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b3" placeholder="Dán link sản phẩm Google Drive..." value="" oninput="checkLink('b3')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b3"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem sản phẩm</a>
         </div>
     </div>
 
-    <div class="footer">
-        SYS.STATUS: OPERATIONAL // AGENT: PHAM ANH TUNG © 2026
+    <div class="project-card animate-item delay-5" id="card-b4">
+        <div class="project-header">
+            <div class="project-title">Bài 4: Video thuyết trình dự án hoặc Slide báo cáo</div>
+            <span class="status-badge waiting" id="badge-b4"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
+        </div>
+        <p class="project-desc">Định dạng yêu cầu: Link video (YouTube/Drive) hoặc file Powerpoint. Thuyết minh chi tiết giải pháp công nghệ và tính khả thi của mô hình đề xuất.</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b4" placeholder="Dán link bài thuyết trình..." value="" oninput="checkLink('b4')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b4"><i class="fa-solid fa-play"></i> Xem nội dung</a>
+        </div>
     </div>
+
+    <div class="project-card animate-item delay-6" id="card-b5">
+        <div class="project-header">
+            <div class="project-title">Bài 5: Bản vẽ thiết kế kĩ thuật hoặc Sơ đồ hệ thống</div>
+            <span class="status-badge waiting" id="badge-b5"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
+        </div>
+        <p class="project-desc">Định dạng yêu cầu: Bản vẽ CAD, sơ đồ khối mạch điện tử hoặc cấu trúc thuật toán điều khiển ứng dụng trí tuệ nhân tạo (AI).</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b5" placeholder="Dán link tài liệu kỹ thuật..." value="" oninput="checkLink('b5')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b5"><i class="fa-solid fa-gears"></i> Xem sơ đồ</a>
+        </div>
+    </div>
+
+    <div class="project-card animate-item delay-6" id="card-b6">
+        <div class="project-header">
+            <div class="project-title">Bài 6: Báo cáo tổng kết học phần & Đánh giá năng lực</div>
+            <span class="status-badge waiting" id="badge-b6"><i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu</span>
+        </div>
+        <p class="project-desc">Định dạng yêu cầu: .pdf. Bài tự đánh giá sự tiến bộ của bản thân sau khóa học, định hướng ứng dụng AI vào chuyên ngành Cơ điện tử.</p>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <i class="fa-solid fa-link"></i>
+                <input type="text" class="url-input" id="input-b6" placeholder="Dán link báo cáo tổng kết..." value="" oninput="checkLink('b6')">
+            </div>
+            <a href="#" target="_blank" class="btn-view" id="btn-b6"><i class="fa-solid fa-file-invoice"></i> Xem báo cáo</a>
+        </div>
+    </div>
+
+    <footer class="animate-item delay-6">
+        <p>© 2026 Phạm Anh Tùng - Bản quyền sản phẩm học tập thuộc Đại học Công nghệ (VNU-UET).</p>
+    </footer>
 </div>
 
 <script>
-    // Kiến trúc xử lý dữ liệu tự động cho Dashboard
-    document.addEventListener("DOMContentLoaded", () => {
-        const modules = document.querySelectorAll('.module-card');
+    // Hàm kiểm tra và kích hoạt hiệu ứng khi có link
+    function checkLink(id) {
+        const input = document.getElementById('input-' + id);
+        const badge = document.getElementById('badge-' + id);
+        const btn = document.getElementById('btn-' + id);
+        const card = document.getElementById('card-' + id);
+        
+        if (input.value.trim().length > 10) { // Nếu có dán link
+            badge.className = "status-badge done";
+            badge.innerHTML = '<i class="fa-solid fa-check"></i> Đã nộp bài';
+            input.classList.add('filled');
+            btn.href = input.value;
+            btn.classList.add('active');
+            card.classList.add('completed');
+        } else { // Nếu ô trống
+            badge.className = "status-badge waiting";
+            badge.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Chờ dữ liệu';
+            input.classList.remove('filled');
+            btn.href = "#";
+            btn.classList.remove('active');
+            card.classList.remove('completed');
+        }
+    }
 
-        modules.forEach(node => {
-            const dataInput = node.querySelector('.cyber-input');
-            const actionBtn = node.querySelector('.cyber-btn');
-            const statusLed = node.querySelector('.led-status');
-
-            const evaluateCore = () => {
-                const secureLink = dataInput.value.trim();
-                if (secureLink.startsWith('http')) {
-                    // Trạng thái kích hoạt mạch thành công (Màu xanh)
-                    node.classList.add('activated-node');
-                    dataInput.classList.add('has-data');
-                    actionBtn.classList.add('ready');
-                    actionBtn.setAttribute('href', secureLink);
-                    statusLed.innerText = "ONLINE // ĐÃ KẾT NỐI";
-                } else {
-                    // Trạng thái chờ dữ liệu (Màu đỏ)
-                    node.classList.remove('activated-node');
-                    dataInput.classList.remove('has-data');
-                    actionBtn.classList.remove('ready');
-                    actionBtn.removeAttribute('href');
-                    statusLed.innerText = "HỆ THỐNG ĐỢI LINK";
-                }
-            };
-
-            dataInput.addEventListener('input', evaluateCore);
-            evaluateCore(); // Tự động đồng bộ liên kết cứng ngay khi load hệ thống
-        });
+    // Tự động quét các ô input ngay khi vừa tải trang xong
+    window.addEventListener('DOMContentLoaded', () => {
+        for(let i=1; i<=6; i++) { 
+            checkLink('b' + i); 
+        }
     });
 </script>
-
 </body>
 </html>
