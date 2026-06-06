@@ -3,297 +3,420 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ sơ học tập - Phạm Anh Tùng</title>
+    <title>Mechatronics Digital Portfolio - Phạm Anh Tùng</title>
     <style>
-        /* CSS viết theo phong cách tối giản, dễ đọc, mang hơi hướng code tay */
-        body {
-            font-family: 'Times New Roman', Times, serif; /* Font chữ học thuật chuẩn */
-            background-color: #f0f2f5;
-            color: #222;
-            line-height: 1.6;
+        /* Hệ màu Cyberpunk Tech cao cấp */
+        :root {
+            --matrix-bg: #030712;
+            --cyber-panel: rgba(17, 24, 39, 0.7);
+            --neon-blue: #06b6d4;
+            --neon-green: #10b981;
+            --neon-red: #ef4444;
+            --text-bright: #f3f4f6;
+            --text-dim: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 30px 15px;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
-        .page-wrapper {
-            max-width: 850px;
+
+        body {
+            background-color: var(--matrix-bg);
+            color: var(--text-bright);
+            min-height: 100vh;
+            padding: 50px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng mạng lưới công nghệ chìm phía sau nền */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        .dashboard {
+            max-width: 950px;
             margin: 0 auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border-top: 6px solid #003366; /* Màu xanh đại học truyền thống */
         }
-        .header-title {
+
+        /* Khung tiêu đề hiệu ứng quét Radar */
+        .cyber-header {
+            position: relative;
+            background: var(--cyber-panel);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 12px;
             text-align: center;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 20px;
             margin-bottom: 30px;
+            overflow: hidden;
         }
-        .header-title h1 {
-            color: #003366;
-            margin: 0 0 5px 0;
-            font-size: 28px;
+
+        .cyber-header::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent);
+            transform: skewX(-25deg);
+            animation: radar-sweep 6s infinite linear;
+        }
+
+        .cyber-header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 0 15px var(--neon-blue);
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
-        .header-title p {
-            margin: 0;
-            font-style: italic;
-            color: #555;
+
+        /* Grid thông tin cá nhân dạng thông số kĩ thuật (Telemetry) */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
         }
-        .student-metadata {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            background: #f9f9f9;
-            padding: 15px 20px;
-            border-left: 4px solid #003366;
-            margin-bottom: 40px;
+
+        .telemetry-box {
+            background: var(--cyber-panel);
+            border: 1px solid rgba(156, 163, 175, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 6px;
+            position: relative;
+            transition: all 0.3s;
         }
-        .meta-box {
-            width: 48%;
-            margin-bottom: 10px;
+
+        .telemetry-box:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            transform: translateY(-2px);
         }
-        .meta-box span {
-            color: #666;
-            font-size: 14px;
-        }
-        .meta-box strong {
+
+        .telemetry-box label {
             display: block;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--neon-blue);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
-        .assignment-row {
-            border: 1px solid #e0e0e0;
-            padding: 20px;
+
+        .telemetry-box value {
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Danh sách Module bài tập */
+        .module-card {
+            background: var(--cyber-panel);
+            border: 1px solid rgba(156, 163, 175, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 25px;
             margin-bottom: 25px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .assignment-row.done-state {
-            border-color: #2e7d32;
-            background-color: #f4fff5;
+
+        /* Hiệu ứng Hover phát sáng đổi màu theo trạng thái */
+        .module-card:hover {
+            transform: scale(1.01) translateX(5px);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
         }
-        .row-header {
+
+        /* Khi bài đã có link - Kích hoạt mạch điện xanh lá cây */
+        .module-card.activated-node {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, var(--cyber-panel), rgba(16, 185, 129, 0.03));
+            animation: pulse-border 2.5s infinite alternate;
+        }
+
+        .module-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-        .row-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #003366;
-            font-family: Arial, sans-serif;
-        }
-        .status-tag {
-            font-size: 13px;
-            padding: 4px 10px;
-            border-radius: 15px;
-            background: #e0e0e0;
-            color: #555;
-            font-family: Arial, sans-serif;
-        }
-        .status-tag.ok {
-            background: #2e7d32;
-            color: white;
-        }
-        .row-desc {
-            font-size: 15px;
-            color: #444;
-            margin-bottom: 15px;
-        }
-        .action-container {
+
+        .module-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
             display: flex;
-            gap: 15px;
+            align-items: center;
+            gap: 10px;
         }
-        .link-input-field {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-family: Arial, sans-serif;
+
+        /* Nút trạng thái nhấp nháy đèn LED */
+        .led-status {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--neon-red);
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
-        .link-input-field:focus {
-            outline: none;
-            border-color: #003366;
+
+        .led-status::before {
+            content: "";
+            width: 8px; height: 8px;
+            background-color: var(--neon-red);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--neon-red);
         }
-        .link-input-field.filled {
-            border-color: #2e7d32;
-            color: #2e7d32;
+
+        /* Đèn LED chuyển xanh khi xong bài */
+        .module-card.activated-node .led-status {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--neon-green);
+            border-color: rgba(16, 185, 129, 0.3);
         }
-        .submit-btn {
-            padding: 10px 20px;
-            background: #999;
-            color: white;
-            text-decoration: none;
-            border-radius: 3px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            pointer-events: none;
+
+        .module-card.activated-node .led-status::before {
+            background-color: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: led-blink 1.5s infinite;
         }
-        .submit-btn.active-btn {
-            background: #003366;
-            pointer-events: auto;
+
+        .module-text {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
         }
-        .submit-btn.active-btn:hover {
-            background: #002244;
+
+        /* Khung điều khiển tích hợp link */
+        .control-bay {
+            display: flex;
+            gap: 12px;
         }
-        .footer-note {
-            text-align: center;
-            margin-top: 40px;
+
+        .cyber-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(156, 163, 175, 0.3);
+            padding: 12px 15px;
+            color: #ffffff;
+            border-radius: 6px;
             font-size: 14px;
-            color: #888;
-            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+
+        .cyber-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+        }
+
+        .cyber-input.has-data {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        /* Nút hành động phản quang */
+        .cyber-btn {
+            background: rgba(156, 163, 175, 0.1);
+            color: var(--text-dim);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid rgba(156, 163, 175, 0.2);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .cyber-btn.ready {
+            background: linear-gradient(135deg, #0891b2, #0284c7);
+            color: white;
+            border-color: var(--neon-blue);
+            pointer-events: auto;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+
+        .cyber-btn.ready:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--neon-blue);
+        }
+
+        /* Các hiệu ứng Animation chuyển động kĩ thuật */
+        @keyframes radar-sweep {
+            0% { left: -100%; }
+            50%, 100% { left: 150%; }
+        }
+
+        @keyframes led-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.05); }
+            100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: rgba(156, 163, 175, 0.4);
+            font-size: 12px;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<div class="page-wrapper">
-    <div class="header-title">
-        <h1>Báo Cáo Sản Phẩm Số</h1>
-        <p>Học phần: Nhập môn Công nghệ số & Ứng dụng AI</p>
+<div class="dashboard">
+    <div class="cyber-header">
+        <h1>Digital Portfolio System</h1>
+        <p style="color: var(--neon-blue); font-size: 14px; letter-spacing: 2px;">MODULE VÀNG - ĐỒ ÁN HỌC PHẦN</p>
     </div>
 
-    <div class="student-metadata">
-        <div class="meta-box">
-            <span>Họ và tên sinh viên:</span>
-            <strong>Phạm Anh Tùng</strong>
-        </div>
-        <div class="meta-box">
-            <span>Mã sinh viên:</span>
-            <strong>25021465</strong>
-        </div>
-        <div class="meta-box">
-            <span>Đơn vị đào tạo:</span>
-            <strong>Trường Đại học Công nghệ (VNU-UET)</strong>
-        </div>
-        <div class="meta-box">
-            <span>Chuyên ngành:</span>
-            <strong>Công nghệ kĩ thuật Cơ điện tử</strong>
-        </div>
+    <!-- Hệ thống dữ liệu đầu ra của Sinh viên -->
+    <div class="telemetry-grid">
+        <div class="telemetry-box"><label>STUDENT NAME</label><value>Phạm Anh Tùng</value></div>
+        <div class="telemetry-box"><label>SERIAL NUMBER</label><value>25021465</value></div>
+        <div class="telemetry-box"><label>INSTITUTION</label><value>VNU - UET</value></div>
+        <div class="telemetry-box"><label>DEPARTMENT</label><value>Cơ điện tử (Mechatronics)</value></div>
     </div>
 
-    <!-- Bài 1 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 1: Cam kết liêm chính & Sơ đồ Infographic</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
+    <!-- Module 01 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">⚙️ Module 01: Liêm chính học thuật & Sơ đồ Tư duy</div>
+            <div class="led-status">Hệ thống đợi link</div>
         </div>
-        <div class="row-desc">Yêu cầu (.docx / .pdf): Văn bản cam kết liêm chính học thuật và sơ đồ tư duy quy trình thiết kế.</div>
-        <div class="action-container">
-            <!-- Tùng dán link Drive vào thuộc tính value="" ở bên dưới -->
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Mở tài liệu ↗</a>
+        <div class="module-text">Tệp lưu trữ thông tin cam kết liêm chính học thuật kết hợp sơ đồ tư duy minh họa luồng xử lý và phát triển thiết bị truyền thông thông minh.</div>
+        <div class="control-bay">
+            <!-- TÙNG CHỈ CẦN DÁN LINK DRIVE VÀO THUỘC TÍNH value="" Ở ĐÂY LÀ WEB TỰ ĐỔI MÀU -->
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
         </div>
     </div>
 
-    <!-- Bài 2 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 2: Ảnh minh chứng cấu trúc thư mục</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
+    <!-- Module 02 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">📂 Module 02: Cấu trúc thư mục hệ thống máy tính</div>
+            <div class="led-status">Hệ thống đợi link</div>
         </div>
-        <div class="row-desc">Yêu cầu (.png / .jpg): Ảnh chụp màn hình File Explorer thể hiện cách sắp xếp dữ liệu học tập trên máy tính.</div>
-        <div class="action-container">
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Xem ảnh ↗</a>
-        </div>
-    </div>
-
-    <!-- Bài 3 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 3: Tiểu luận Công nghệ Số & Cơ điện tử</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
-        </div>
-        <div class="row-desc">Yêu cầu (.docx / .pdf): Nghiên cứu ứng dụng các công nghệ mới (AI, IoT...) vào lĩnh vực Cơ điện tử.</div>
-        <div class="action-container">
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Mở tiểu luận ↗</a>
+        <div class="module-text">Sơ đồ cây dữ liệu minh chứng cho hoạt động quản lý, lưu trữ, phân loại dữ liệu bài tập lớn một cách logic trên máy tính cá nhân.</div>
+        <div class="control-bay">
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
         </div>
     </div>
 
-    <!-- Bài 4 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 4: Thuyết trình giải pháp kĩ thuật</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
+    <!-- Module 03 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">📝 Module 03: Tiểu luận nghiên cứu Công nghệ số</div>
+            <div class="led-status">Hệ thống đợi link</div>
         </div>
-        <div class="row-desc">Yêu cầu (Video / .pptx): Trình bày chi tiết tính năng và tính khả thi của mô hình đề xuất.</div>
-        <div class="action-container">
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Xem thuyết trình ↗</a>
-        </div>
-    </div>
-
-    <!-- Bài 5 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 5: Bản vẽ CAD / Sơ đồ hệ thống</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
-        </div>
-        <div class="row-desc">Yêu cầu (File CAD / Hình ảnh): Bản vẽ thiết kế kĩ thuật, mạch điện tử hoặc cấu trúc thuật toán điều khiển.</div>
-        <div class="action-container">
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Mở bản vẽ ↗</a>
+        <div class="module-text">Báo cáo nghiên cứu chuyên sâu về mô hình tích hợp trí tuệ nhân tạo (AI) kết hợp các cảm biến thông minh vào dây chuyền Cơ điện tử tự động.</div>
+        <div class="control-bay">
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
         </div>
     </div>
 
-    <!-- Bài 6 -->
-    <div class="assignment-row">
-        <div class="row-header">
-            <div class="row-title">Bài 6: Đánh giá năng lực & Tổng kết học phần</div>
-            <div class="status-tag">⚠ Chưa nộp</div>
+    <!-- Module 04 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">🎬 Module 04: Video thuyết trình giải pháp hệ thống</div>
+            <div class="led-status">Hệ thống đợi link</div>
         </div>
-        <div class="row-desc">Yêu cầu (.pdf): Tự đánh giá tiến bộ của bản thân và định hướng tương lai.</div>
-        <div class="action-container">
-            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
-            <a href="#" target="_blank" class="submit-btn">Mở báo cáo ↗</a>
+        <div class="module-text">Dữ liệu đa phương tiện ghi lại quá trình báo cáo, chứng minh tính thực tiễn và giải trình thuật toán thiết kế của sản phẩm Cơ điện tử.</div>
+        <div class="control-bay">
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
         </div>
     </div>
 
-    <div class="footer-note">
-        Được thực hiện bởi Phạm Anh Tùng - Bản quyền © 2026
+    <!-- Module 05 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">📐 Module 05: Bản vẽ kĩ thuật & Sơ đồ giải thuật điều khiển</div>
+            <div class="led-status">Hệ thống đợi link</div>
+        </div>
+        <div class="module-text">Hồ sơ thiết kế chi tiết bao gồm bản vẽ CAD, sơ đồ khối mạch điện hoặc lưu đồ thuật toán logic xử lý thông tin đầu vào/đầu ra của robot.</div>
+        <div class="control-bay">
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
+        </div>
+    </div>
+
+    <!-- Module 06 -->
+    <div class="module-card">
+        <div class="module-top">
+            <div class="module-title">📊 Module 06: Tổng kết học phần & Đánh giá năng lực số</div>
+            <div class="led-status">Hệ thống đợi link</div>
+        </div>
+        <div class="module-text">Báo cáo tổng kết chặng đường nghiên cứu học phần, đo lường sự phát triển tư duy công nghệ và lộ trình ứng dụng AI vào ngành học.</div>
+        <div class="control-bay">
+            <input type="text" class="cyber-input" placeholder="Nhập địa chỉ URL Google Drive tại đây..." value="">
+            <a href="#" target="_blank" class="cyber-btn">KẾT NỐI ↗</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        SYS.STATUS: OPERATIONAL // AGENT: PHAM ANH TUNG © 2026
     </div>
 </div>
 
 <script>
-    // Javascript viết theo chuẩn ES6 (hiện đại, sạch sẽ và khác biệt hoàn toàn với bản trước)
+    // Kiến trúc xử lý dữ liệu tự động cho Dashboard
     document.addEventListener("DOMContentLoaded", () => {
-        const rows = document.querySelectorAll('.assignment-row');
+        const modules = document.querySelectorAll('.module-card');
 
-        rows.forEach(row => {
-            const input = row.querySelector('.link-input-field');
-            const btn = row.querySelector('.submit-btn');
-            const tag = row.querySelector('.status-tag');
+        modules.forEach(node => {
+            const dataInput = node.querySelector('.cyber-input');
+            const actionBtn = node.querySelector('.cyber-btn');
+            const statusLed = node.querySelector('.led-status');
 
-            const validateSubmission = () => {
-                const linkVal = input.value.trim();
-                if (linkVal.startsWith('http')) {
-                    // Nếu có link hợp lệ
-                    row.classList.add('done-state');
-                    input.classList.add('filled');
-                    btn.classList.add('active-btn');
-                    btn.setAttribute('href', linkVal);
-                    tag.classList.add('ok');
-                    tag.innerText = "✓ Đã nộp bài";
+            const evaluateCore = () => {
+                const secureLink = dataInput.value.trim();
+                if (secureLink.startsWith('http')) {
+                    // Trạng thái kích hoạt mạch thành công (Màu xanh)
+                    node.classList.add('activated-node');
+                    dataInput.classList.add('has-data');
+                    actionBtn.classList.add('ready');
+                    actionBtn.setAttribute('href', secureLink);
+                    statusLed.innerText = "ONLINE // ĐÃ KẾT NỐI";
                 } else {
-                    // Nếu ô trống hoặc không phải link
-                    row.classList.remove('done-state');
-                    input.classList.remove('filled');
-                    btn.classList.remove('active-btn');
-                    btn.removeAttribute('href');
-                    tag.classList.remove('ok');
-                    tag.innerText = "⚠ Chưa nộp";
+                    // Trạng thái chờ dữ liệu (Màu đỏ)
+                    node.classList.remove('activated-node');
+                    dataInput.classList.remove('has-data');
+                    actionBtn.classList.remove('ready');
+                    actionBtn.removeAttribute('href');
+                    statusLed.innerText = "HỆ THỐNG ĐỢI LINK";
                 }
             };
 
-            // Lắng nghe sự kiện gõ phím
-            input.addEventListener('input', validateSubmission);
-            
-            // Chạy kiểm tra ngay khi mở trang (dành cho link cứng)
-            validateSubmission();
+            dataInput.addEventListener('input', evaluateCore);
+            evaluateCore(); // Tự động đồng bộ liên kết cứng ngay khi load hệ thống
         });
     });
 </script>
