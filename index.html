@@ -127,14 +127,14 @@
             border-radius: 12px; padding: 20px; margin-top: 15px;
             border: 1px dashed rgba(255,255,255,0.2);
         }
-        .sub-title { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem; font-weight: 600;}
+        .sub-title { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem; font-weight: 600; align-items: center;}
         
         /* Trạng thái */
         .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 5px; }
         .status-badge.wait { background: rgba(255,255,255,0.1); color: var(--text-muted); }
         .status-badge.done { background: rgba(16, 185, 129, 0.15); color: var(--success); box-shadow: 0 0 10px rgba(16,185,129,0.3); }
 
-        .input-group { display: flex; gap: 15px; }
+        .input-group { display: flex; gap: 15px; margin-top: 10px; }
         .cyber-input {
             flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
             color: white; padding: 12px 15px; border-radius: 8px; transition: 0.3s;
@@ -164,7 +164,7 @@
 <div class="animated-bg"></div>
 
 <nav>
-    <div class="logo">NST.<span>PORTFOLIO</span></div>
+    <div class="logo">PAT.<span>PORTFOLIO</span></div>
     <div class="nav-links">
         <a href="#intro" class="active">Giới thiệu</a>
         <a href="#projects">Dự án thành phần</a>
@@ -173,6 +173,7 @@
 </nav>
 
 <div class="container">
+    <!-- GIỚI THIỆU -->
     <section id="intro" class="reveal">
         <div class="glass-card">
             <div class="hero-grid">
@@ -195,9 +196,11 @@
         </div>
     </section>
 
+    <!-- HỆ THỐNG DỰ ÁN -->
     <section id="projects">
         <h2 class="section-title reveal"><i class="fa-solid fa-folder-tree"></i> Hệ thống Dự án & Bài tập</h2>
 
+        <!-- BÀI 1 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>1. Thao tác cơ bản với tệp tin và thư mục</h3>
@@ -207,25 +210,27 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>1.1 Báo cáo thực hành Bài tập 1 (.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p1-1"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p1-1" placeholder="Dán link sản phẩm (Google Drive, OneDrive...)" value="https://drive.google.com/file/d/1Y_WatiIjzPm3s0AeWgCZqqj7gJElInS3/view?usp=sharing" oninput="checkLink('p1-1')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p1-1"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p1-1" placeholder="Dán link sản phẩm (Google Drive, OneDrive...)" value="https://drive.google.com/file/d/1Y_WatiIjzPm3s0AeWgCZqqj7gJElInS3/view?usp=sharing" oninput="checkLink('p1-1')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p1-1"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
 
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>1.2 Ảnh chụp cấu trúc cây thư mục File Explorer (.png / .jpg)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p1-2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p1-2" placeholder="Dán link ảnh online (Google Drive, Imgur...)" value="https://postimg.cc/r0P1SGG1" oninput="checkLink('p1-2')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p1-2"><i class="fa-solid fa-image active"></i> Xem ảnh</a>
+                    <input type="text" class="cyber-input" id="input-p1-2" placeholder="Dán link ảnh online (Google Drive, Imgur...)" value="https://postimg.cc/r0P1SGG1" oninput="checkLink('p1-2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p1-2"><i class="fa-solid fa-image"></i> Xem ảnh</a>
                 </div>
             </div>
         </div>
 
+        <!-- BÀI 2 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>2. Tìm kiếm và đánh giá thông tin học thuật</h3>
@@ -235,14 +240,16 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>Báo cáo thẩm định tài liệu toàn văn (.docx/.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p2" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1MuVso5sejlzhzTrV-IXfgx7T1I4vvie4/view?usp=sharing" oninput="checkLink('p2')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p2"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p2" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1MuVso5sejlzhzTrV-IXfgx7T1I4vvie4/view?usp=sharing" oninput="checkLink('p2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p2"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
         </div>
 
+        <!-- BÀI 3 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>3. Nghiên cứu & Thử nghiệm kỹ thuật Prompt Engineering</h3>
@@ -252,15 +259,16 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>Báo cáo nghiên cứu Prompt kỹ thuật chuyên sâu (.docx/.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p3"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p3" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1pMybyXYW7TaT98XX75JFwrJU1ARc2p9O/view?usp=sharing" oninput="checkLink('p3')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p3"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p3" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1pMybyXYW7TaT98XX75JFwrJU1ARc2p9O/view?usp=sharing" oninput="checkLink('p3')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p3"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
         </div>
 
+        <!-- BÀI 4 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>4. Hợp tác trực tuyến trong môi trường số</h3>
@@ -270,14 +278,16 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>Báo cáo đóng góp cá nhân và đường link Board nhóm (.docx /.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p4"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p4" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1qYzRMhOVGr4kAqCopgg3Z4pUnefMjIqc/view?usp=sharing" oninput="checkLink('p4')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p4"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p4" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1qYzRMhOVGr4kAqCopgg3Z4pUnefMjIqc/view?usp=sharing" oninput="checkLink('p4')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p4"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
         </div>
 
+        <!-- BÀI 5 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>5. Sử dụng AI tạo sinh trong sáng tạo nội dung số</h3>
@@ -287,24 +297,27 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>5.1 Báo cáo quy trình phối hợp ứng dụng hệ sinh thái AI (.docx/.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p5-1"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p5-1" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/14e9gL50B9aKA9s9aP9WCigYHeSKCpsNB/view?usp=sharing" oninput="checkLink('p5-1')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p5-1"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p5-1" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/14e9gL50B9aKA9s9aP9WCigYHeSKCpsNB/view?usp=sharing" oninput="checkLink('p5-1')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p5-1"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
 
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>5.2 Slide bản thuyết trình hoàn chỉnh (.pptx/.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p5-2"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p5-2" placeholder="Dán link sản phẩm..." value="https://docs.google.com/presentation/d/1mhytIUsKNLCyyuExHfIytMy5cKYmFHpVCpyVcqd7PGA/edit?usp=sharing" oninput="checkLink('p5-2')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p5-2"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p5-2" placeholder="Dán link sản phẩm..." value="https://docs.google.com/presentation/d/1mhytIUsKNLCyyuExHfIytMy5cKYmFHpVCpyVcqd7PGA/edit?usp=sharing" oninput="checkLink('p5-2')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p5-2"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
         </div>
 
+        <!-- BÀI 6 -->
         <div class="glass-card reveal">
             <div class="project-header">
                 <h3>6. Sử dụng AI có trách nhiệm & Đạo đức học thuật</h3>
@@ -314,16 +327,17 @@
             <div class="submission-zone">
                 <div class="sub-title">
                     <span>Báo cáo cam kết liêm chính học thuật & Sơ đồ thiết kế Infographic (.docx/.pdf)</span>
-                    <span class="file-status-text status-success"><i class="fa-solid fa-circle-check"></i> Đã nộp bằng link liên kết trực tuyến</span>
+                    <span class="status-badge wait" id="badge-p6"><i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm</span>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="cyber-input filled" id="input-p6" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1JP7tAF_L-M0MINSqip-Fz9MeiUHF_A28/view?usp=sharing" oninput="checkLink('p6')">
-                    <a href="#" target="_blank" class="btn-view" id="btn-p6"><i class="fa-solid fa-eye active"></i> Xem sản phẩm</a>
+                    <input type="text" class="cyber-input" id="input-p6" placeholder="Dán link sản phẩm..." value="https://drive.google.com/file/d/1JP7tAF_L-M0MINSqip-Fz9MeiUHF_A28/view?usp=sharing" oninput="checkLink('p6')">
+                    <a href="#" target="_blank" class="btn-view" id="btn-p6"><i class="fa-solid fa-eye"></i> Xem sản phẩm</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- TỔNG KẾT -->
     <section id="conclusion" class="reveal">
         <h2 class="section-title"><i class="fa-solid fa-flag-checkered"></i> Hành trình Nhìn lại & Đúc kết</h2>
         <div class="glass-card">
@@ -366,22 +380,28 @@
         const badge = document.getElementById('badge-' + id);
         const btn = document.getElementById('btn-' + id);
         
+        if (!input || !btn) return; // Bảo vệ nếu thiếu phần tử
+
         if (input.value.trim().length > 10) { 
-            badge.className = "status-badge done";
-            badge.innerHTML = '<i class="fa-solid fa-check"></i> Đã nộp bằng link';
+            if (badge) {
+                badge.className = "status-badge done";
+                badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Đã nộp bằng link';
+            }
             input.classList.add('filled');
             btn.href = input.value;
             btn.classList.add('active');
         } else {
-            badge.className = "status-badge wait";
-            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm';
+            if (badge) {
+                badge.className = "status-badge wait";
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Chưa nộp sản phẩm';
+            }
             input.classList.remove('filled');
             btn.href = "#";
             btn.classList.remove('active');
         }
     }
 
-    // Tự động kiểm tra lúc tải trang (nếu bạn gắn value cứng)
+    // Tự động kiểm tra và mở khóa các link đã gắn sẵn khi tải trang
     window.addEventListener('DOMContentLoaded', () => {
         inputsToTrack.forEach(id => checkLink(id));
     });
