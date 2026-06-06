@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ học tập - Phạm Anh Tùng</title>
+    <style>
+        /* CSS viết theo phong cách tối giản, dễ đọc, mang hơi hướng code tay */
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Font chữ học thuật chuẩn */
+            background-color: #f0f2f5;
+            color: #222;
+            line-height: 1.6;
+            margin: 0;
+            padding: 30px 15px;
+        }
+        .page-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-top: 6px solid #003366; /* Màu xanh đại học truyền thống */
+        }
+        .header-title {
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header-title h1 {
+            color: #003366;
+            margin: 0 0 5px 0;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        .header-title p {
+            margin: 0;
+            font-style: italic;
+            color: #555;
+        }
+        .student-metadata {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: #f9f9f9;
+            padding: 15px 20px;
+            border-left: 4px solid #003366;
+            margin-bottom: 40px;
+        }
+        .meta-box {
+            width: 48%;
+            margin-bottom: 10px;
+        }
+        .meta-box span {
+            color: #666;
+            font-size: 14px;
+        }
+        .meta-box strong {
+            display: block;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+        .assignment-row {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .assignment-row.done-state {
+            border-color: #2e7d32;
+            background-color: #f4fff5;
+        }
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .row-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #003366;
+            font-family: Arial, sans-serif;
+        }
+        .status-tag {
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            background: #e0e0e0;
+            color: #555;
+            font-family: Arial, sans-serif;
+        }
+        .status-tag.ok {
+            background: #2e7d32;
+            color: white;
+        }
+        .row-desc {
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        .action-container {
+            display: flex;
+            gap: 15px;
+        }
+        .link-input-field {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: Arial, sans-serif;
+        }
+        .link-input-field:focus {
+            outline: none;
+            border-color: #003366;
+        }
+        .link-input-field.filled {
+            border-color: #2e7d32;
+            color: #2e7d32;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background: #999;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        .submit-btn.active-btn {
+            background: #003366;
+            pointer-events: auto;
+        }
+        .submit-btn.active-btn:hover {
+            background: #002244;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="header-title">
+        <h1>Báo Cáo Sản Phẩm Số</h1>
+        <p>Học phần: Nhập môn Công nghệ số & Ứng dụng AI</p>
+    </div>
+
+    <div class="student-metadata">
+        <div class="meta-box">
+            <span>Họ và tên sinh viên:</span>
+            <strong>Phạm Anh Tùng</strong>
+        </div>
+        <div class="meta-box">
+            <span>Mã sinh viên:</span>
+            <strong>25021465</strong>
+        </div>
+        <div class="meta-box">
+            <span>Đơn vị đào tạo:</span>
+            <strong>Trường Đại học Công nghệ (VNU-UET)</strong>
+        </div>
+        <div class="meta-box">
+            <span>Chuyên ngành:</span>
+            <strong>Công nghệ kĩ thuật Cơ điện tử</strong>
+        </div>
+    </div>
+
+    <!-- Bài 1 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 1: Cam kết liêm chính & Sơ đồ Infographic</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (.docx / .pdf): Văn bản cam kết liêm chính học thuật và sơ đồ tư duy quy trình thiết kế.</div>
+        <div class="action-container">
+            <!-- Tùng dán link Drive vào thuộc tính value="" ở bên dưới -->
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Mở tài liệu ↗</a>
+        </div>
+    </div>
+
+    <!-- Bài 2 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 2: Ảnh minh chứng cấu trúc thư mục</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (.png / .jpg): Ảnh chụp màn hình File Explorer thể hiện cách sắp xếp dữ liệu học tập trên máy tính.</div>
+        <div class="action-container">
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Xem ảnh ↗</a>
+        </div>
+    </div>
+
+    <!-- Bài 3 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 3: Tiểu luận Công nghệ Số & Cơ điện tử</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (.docx / .pdf): Nghiên cứu ứng dụng các công nghệ mới (AI, IoT...) vào lĩnh vực Cơ điện tử.</div>
+        <div class="action-container">
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Mở tiểu luận ↗</a>
+        </div>
+    </div>
+
+    <!-- Bài 4 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 4: Thuyết trình giải pháp kĩ thuật</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (Video / .pptx): Trình bày chi tiết tính năng và tính khả thi của mô hình đề xuất.</div>
+        <div class="action-container">
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Xem thuyết trình ↗</a>
+        </div>
+    </div>
+
+    <!-- Bài 5 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 5: Bản vẽ CAD / Sơ đồ hệ thống</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (File CAD / Hình ảnh): Bản vẽ thiết kế kĩ thuật, mạch điện tử hoặc cấu trúc thuật toán điều khiển.</div>
+        <div class="action-container">
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Mở bản vẽ ↗</a>
+        </div>
+    </div>
+
+    <!-- Bài 6 -->
+    <div class="assignment-row">
+        <div class="row-header">
+            <div class="row-title">Bài 6: Đánh giá năng lực & Tổng kết học phần</div>
+            <div class="status-tag">⚠ Chưa nộp</div>
+        </div>
+        <div class="row-desc">Yêu cầu (.pdf): Tự đánh giá tiến bộ của bản thân và định hướng tương lai.</div>
+        <div class="action-container">
+            <input type="text" class="link-input-field" placeholder="Dán đường dẫn (Link) vào đây..." value="">
+            <a href="#" target="_blank" class="submit-btn">Mở báo cáo ↗</a>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Được thực hiện bởi Phạm Anh Tùng - Bản quyền © 2026
+    </div>
+</div>
+
+<script>
+    // Javascript viết theo chuẩn ES6 (hiện đại, sạch sẽ và khác biệt hoàn toàn với bản trước)
+    document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll('.assignment-row');
+
+        rows.forEach(row => {
+            const input = row.querySelector('.link-input-field');
+            const btn = row.querySelector('.submit-btn');
+            const tag = row.querySelector('.status-tag');
+
+            const validateSubmission = () => {
+                const linkVal = input.value.trim();
+                if (linkVal.startsWith('http')) {
+                    // Nếu có link hợp lệ
+                    row.classList.add('done-state');
+                    input.classList.add('filled');
+                    btn.classList.add('active-btn');
+                    btn.setAttribute('href', linkVal);
+                    tag.classList.add('ok');
+                    tag.innerText = "✓ Đã nộp bài";
+                } else {
+                    // Nếu ô trống hoặc không phải link
+                    row.classList.remove('done-state');
+                    input.classList.remove('filled');
+                    btn.classList.remove('active-btn');
+                    btn.removeAttribute('href');
+                    tag.classList.remove('ok');
+                    tag.innerText = "⚠ Chưa nộp";
+                }
+            };
+
+            // Lắng nghe sự kiện gõ phím
+            input.addEventListener('input', validateSubmission);
+            
+            // Chạy kiểm tra ngay khi mở trang (dành cho link cứng)
+            validateSubmission();
+        });
+    });
+</script>
+
+</body>
+</html>
